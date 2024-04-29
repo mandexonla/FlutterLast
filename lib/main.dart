@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapps/pages/login.dart';
+import 'package:todoapps/pages/splash.dart';
 import 'package:todoapps/themes/theme_provider.dart';
 import 'pages/home_page.dart';
 
@@ -25,7 +27,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const SplashPage(
+        title: '',
+      ),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }

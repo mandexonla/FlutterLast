@@ -16,14 +16,14 @@ class DialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.yellow[300],
+      backgroundColor: Colors.blueAccent[300],
       content: Container(
         height: 120,
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           TextField(
             controller: controller,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: "them ghi chu moi",
             ),

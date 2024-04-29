@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:todoapps/components/my_drawer.dart';
 import 'package:todoapps/data/database.dart';
+import 'package:todoapps/pages/proflie_page.dart';
 import 'package:todoapps/utils/dialog_box.dart';
 import '../utils/todo_title.dart';
 
@@ -74,27 +75,34 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow[200],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('TO DO'),
-        backgroundColor: Colors.orange[300],
-        elevation: 0,
-        centerTitle: true,
-        actions: [
-          Container(
-            height: 40,
-            width: 40,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset('/images/avatar.jpg'),
+          title: const Text('TO DO'),
+          backgroundColor: Colors.blue[300],
+          elevation: 0,
+          centerTitle: true,
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                );
+              },
+              child: Container(
+                height: 40,
+                width: 40,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset('/images/avatar.jpg'),
+                ),
+              ),
             ),
-          )
-        ],
-      ),
+          ]),
       drawer: const MyDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewTask,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: ListView.builder(
           itemCount: db.toDoList.length,

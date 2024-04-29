@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ToDotile extends StatelessWidget {
-
   final String taskName;
   final bool taskCompleted;
   Function(bool?)? onChanged;
   Function(BuildContext)? deleteFunction;
 
-
   ToDotile({
-    super.key, 
-    required this.taskName,  
-    required this.taskCompleted,  
-    required this.onChanged, 
+    super.key,
+    required this.taskName,
+    required this.taskCompleted,
+    required this.onChanged,
     required this.deleteFunction,
-    });
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,30 +28,29 @@ class ToDotile extends StatelessWidget {
               icon: Icons.delete,
               backgroundColor: Colors.red.shade300,
               borderRadius: BorderRadius.circular(12),
-              )
+            )
           ],
         ),
         child: Container(
           padding: EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.yellow,
-            borderRadius: BorderRadius.circular(12)
-          ),
+              color: Colors.blue[100], borderRadius: BorderRadius.circular(12)),
           child: Row(
             children: [
               // checkbox
               Checkbox(
-                value: taskCompleted, 
+                value: taskCompleted,
                 onChanged: onChanged,
                 activeColor: Colors.green,
-                ),
+              ),
               //task name
               Text(
                 taskName,
-                style: TextStyle(decoration: taskCompleted 
-                ? TextDecoration.lineThrough 
-                : TextDecoration.none),
-                ),
+                style: TextStyle(
+                    decoration: taskCompleted
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none),
+              ),
             ],
           ),
         ),

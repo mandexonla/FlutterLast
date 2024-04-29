@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapps/pages/login.dart';
 import 'package:todoapps/pages/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -11,7 +12,7 @@ class MyDrawer extends StatelessWidget {
       child: Column(
         children: [
           // logo
-          DrawerHeader(
+          const DrawerHeader(
             child: Center(
               child: Icon(Icons.note),
             ),
@@ -38,7 +39,27 @@ class MyDrawer extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SettingsPage(),
+                    builder: (context) => const SettingsPage(),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          // log out
+          Padding(
+            padding: const EdgeInsets.only(left: 25.0, top: 0),
+            child: ListTile(
+              title: const Text('L O G O U T'),
+              leading: const Icon(Icons.arrow_circle_left_outlined),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const loginPages(
+                      title: '',
+                    ),
                   ),
                 );
               },
