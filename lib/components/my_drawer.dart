@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todoapps/pages/login.dart';
 import 'package:todoapps/pages/settings_page.dart';
+import 'package:todoapps/utils/heat_map.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -64,7 +65,24 @@ class MyDrawer extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
+          // calendar
+          Padding(
+            padding: const EdgeInsets.only(left: 25.0, top: 0),
+            child: ListTile(
+              title: const Text('C A L E N D A R'),
+              leading: const Icon(Icons.calendar_month),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyHeatMap(),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
