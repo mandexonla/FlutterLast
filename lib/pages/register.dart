@@ -125,7 +125,7 @@ class _registerState extends State<register> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => loginPages(
+                                  builder: (context) => const loginPages(
                                     title: '',
                                   ),
                                 ),

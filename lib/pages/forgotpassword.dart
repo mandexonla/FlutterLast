@@ -45,7 +45,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                       height: 20,
                     ),
                     const Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         "Username",
                         style: TextStyle(color: Colors.blue, fontSize: 20),
@@ -87,7 +87,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                       height: 20,
                     ),
                     const Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         "Confirm Password",
                         style: TextStyle(color: Colors.blue, fontSize: 20),
@@ -127,7 +127,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => loginPages(
+                                      builder: (context) => const loginPages(
                                             title: '',
                                           )));
                             } else {

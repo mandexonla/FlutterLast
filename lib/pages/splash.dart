@@ -31,14 +31,14 @@ class _SplashPageState extends State<SplashPage> {
       body: Stack(
         children: [
           Image.asset(
-            '/images/background.png',
+            'assets/images/background.png',
             width: size.width,
             height: size.height,
             fit: BoxFit.fill,
           ),
           Center(
             child: Image.asset(
-              '/images/logo.png',
+              'assets/images/logo.png',
               width: 960.0,
             ),
           )

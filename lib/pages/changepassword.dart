@@ -149,7 +149,9 @@ class _loginPagesState extends State<ChangePassword> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => HomePage()));
+                                      builder: (context) => const HomePage(
+                                            title: '',
+                                          )));
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(

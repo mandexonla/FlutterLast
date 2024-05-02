@@ -7,7 +7,7 @@ import 'package:todoapps/utils/dialog_box.dart';
 import '../utils/todo_title.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required String title});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                 width: 40,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.asset('/images/avatar.jpg'),
+                  child: Image.asset('assets/images/avatar.jpg'),
                 ),
               ),
             ),

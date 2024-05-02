@@ -7,6 +7,7 @@ import 'package:todoapps/components/app_textfield.dart';
 import 'package:todoapps/controllers/user.dart';
 import 'package:todoapps/pages/forgotpassword.dart';
 import 'package:todoapps/pages/home_page.dart';
+import 'package:todoapps/pages/process_page.dart';
 import 'package:todoapps/pages/register.dart';
 
 class loginPages extends StatefulWidget {
@@ -110,7 +111,7 @@ class _loginPagesState extends State<loginPages> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => const LoadingPage()));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -166,9 +167,10 @@ class _loginPagesState extends State<loginPages> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => const LoadingPage()));
                           },
-                          child: AppBoder(imagePath: '/images/apple.png'),
+                          child: const AppBoder(
+                              imagePath: 'assets/images/apple.png'),
                         ),
                         const SizedBox(width: 25),
                         InkWell(
@@ -176,9 +178,10 @@ class _loginPagesState extends State<loginPages> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => const LoadingPage()));
                           },
-                          child: AppBoder(imagePath: '/images/google.png'),
+                          child: const AppBoder(
+                              imagePath: 'assets/images/google.png'),
                         ),
                         const SizedBox(width: 25),
                         InkWell(
@@ -186,9 +189,10 @@ class _loginPagesState extends State<loginPages> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => const LoadingPage()));
                           },
-                          child: AppBoder(imagePath: '/images/instagram.jpg'),
+                          child: const AppBoder(
+                              imagePath: 'assets/images/instagram.jpg'),
                         ),
                       ],
                     ),
@@ -207,13 +211,14 @@ class _loginPagesState extends State<loginPages> {
                 children: [
                   GestureDetector(
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => forgotpassword(title: ''))),
+                          builder: (context) =>
+                              const forgotpassword(title: ''))),
                       child: const Text(
                         'Forgot password ? |',
                       )),
                   GestureDetector(
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => register(title: ''))),
+                          builder: (context) => const register(title: ''))),
                       child: const Text(
                         ' register',
                         style: TextStyle(color: Colors.red),
