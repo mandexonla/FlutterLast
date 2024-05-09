@@ -7,8 +7,12 @@ class ToDoDatabase {
 // chay cai nay neu day la lan dau tien mo app
   void createInintData() {
     toDoList = [
-      ["Trộm chó", true],
-      ["Ăn cức", false],
+      ["Buy Foods", true],
+      ["Check Emails", false],
+      ["Do Flutter Exercise", true],
+      ["Code Flutters", true],
+      ["Work on JS", true],
+      ["Learning English", false],
     ];
   }
 
@@ -16,6 +20,7 @@ class ToDoDatabase {
   void loadData() {
     toDoList = _myBox.get("TODOLIST");
   }
+
 // update database
   void updateData() {
     _myBox.put("TODOLIST", toDoList);

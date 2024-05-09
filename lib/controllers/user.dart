@@ -1,9 +1,9 @@
 class Authen {
   static String username = 'admin';
-  static String password = '123456';
+  static String password = '1';
 }
 
 class User {
   static String username = 'admin';
-  static String password = '123456';
+  static String password = '1';
 }
