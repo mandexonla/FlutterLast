@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todoapps/components/app_button.dart';
+import 'package:todoapps/components/app_color.dart';
 import 'package:todoapps/components/app_textfield.dart';
 import 'package:todoapps/controllers/user.dart';
 import 'package:todoapps/pages/login.dart';
@@ -36,7 +37,7 @@ class _registerState extends State<register> {
                     const Text(
                       "Register",
                       style: TextStyle(
-                          color: Colors.blue,
+                          color: AppColor.blue,
                           fontSize: 35,
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
@@ -48,15 +49,15 @@ class _registerState extends State<register> {
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         "Username",
-                        style: TextStyle(color: Colors.blue, fontSize: 20),
+                        style: TextStyle(color: AppColor.blue, fontSize: 20),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: AppTextField(
                         controller: uesnameController,
-                        prefixicon:
-                            const Icon(Icons.accessibility, color: Colors.grey),
+                        prefixicon: const Icon(Icons.accessibility,
+                            color: AppColor.grey),
                         hintText: "Enter Username",
                         textInputAction: TextInputAction.next,
                         isPasswords: false,
@@ -69,7 +70,7 @@ class _registerState extends State<register> {
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         "New Password",
-                        style: TextStyle(color: Colors.blue, fontSize: 20),
+                        style: TextStyle(color: AppColor.blue, fontSize: 20),
                       ),
                     ),
                     Padding(
@@ -78,7 +79,7 @@ class _registerState extends State<register> {
                         controller: passwordsNewController,
                         isPasswords: true,
                         prefixicon:
-                            const Icon(Icons.ac_unit, color: Colors.grey),
+                            const Icon(Icons.ac_unit, color: AppColor.grey),
                         hintText: "Enter new Password",
                         textInputAction: TextInputAction.done,
                       ),
@@ -90,7 +91,7 @@ class _registerState extends State<register> {
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         "Confirm Password",
-                        style: TextStyle(color: Colors.blue, fontSize: 20),
+                        style: TextStyle(color: AppColor.blue, fontSize: 20),
                       ),
                     ),
                     Padding(
@@ -99,7 +100,7 @@ class _registerState extends State<register> {
                         controller: passwordsNewConfirmController,
                         isPasswords: true,
                         prefixicon:
-                            const Icon(Icons.ac_unit, color: Colors.grey),
+                            const Icon(Icons.ac_unit, color: AppColor.grey),
                         hintText: "Enter Confirm Password",
                         textInputAction: TextInputAction.done,
                       ),
@@ -151,9 +152,9 @@ class _registerState extends State<register> {
                           }
                         },
                         text: "Next",
-                        textColor: Colors.white,
+                        textColor: AppColor.white,
                         color: Colors.blue,
-                        borderColor: Colors.blue,
+                        borderColor: AppColor.blue,
                         height: 50,
                       ),
                     )

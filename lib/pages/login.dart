@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todoapps/components/app_boder.dart';
 import 'package:todoapps/components/app_button.dart';
+import 'package:todoapps/components/app_color.dart';
 import 'package:todoapps/components/app_textfield.dart';
 import 'package:todoapps/controllers/user.dart';
 import 'package:todoapps/pages/forgotpassword.dart';
@@ -83,7 +84,8 @@ class _loginPagesState extends State<loginPages> {
                       child: AppTextField(
                         controller: passwordsController,
                         isPasswords: true,
-                        prefixicon: const Icon(Icons.lock, color: Colors.grey),
+                        prefixicon:
+                            const Icon(Icons.lock, color: AppColor.grey),
                         hintText: "Enter Password",
                         textInputAction: TextInputAction.done,
                       ),
@@ -123,9 +125,9 @@ class _loginPagesState extends State<loginPages> {
                           }
                         },
                         text: "Login",
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        borderColor: Colors.blue,
+                        textColor: AppColor.white,
+                        color: AppColor.blue,
+                        borderColor: AppColor.blue,
                         height: 50,
                       ),
                     ),
@@ -221,7 +223,7 @@ class _loginPagesState extends State<loginPages> {
                           builder: (context) => const register(title: ''))),
                       child: const Text(
                         ' register',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: AppColor.red),
                       )),
                 ],
               ))

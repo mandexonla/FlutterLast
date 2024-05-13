@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapps/components/app_color.dart';
 import 'package:todoapps/themes/theme_provider.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -13,7 +14,7 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('S E T T I N G S'),
         centerTitle: true,
-        backgroundColor: Colors.orange[300],
+        backgroundColor: AppColor.blue,
       ),
       body: Container(
         decoration: BoxDecoration(

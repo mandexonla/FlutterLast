@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:todoapps/components/app_color.dart';
 import 'package:todoapps/components/my_drawer.dart';
+import 'package:todoapps/components/td_search_box.dart';
 import 'package:todoapps/data/database.dart';
 import 'package:todoapps/pages/proflie_page.dart';
 import 'package:todoapps/utils/dialog_box.dart';
@@ -16,22 +18,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _myBox = Hive.box('myBox');
   ToDoDatabase db = ToDoDatabase();
+  TextEditingController searchController = TextEditingController();
+  late List<dynamic> listTodo;
+  late List<dynamic> searchList;
 
   @override
   void initState() {
-    // TODO: implement initState
-    // neu day la lan dau tien mo app thi tao data co san
     if (_myBox.get("TODOLIST") == null) {
       db.createInintData();
+      listTodo = db.toDoList;
     } else {
-      //thoat data
       db.loadData();
+      listTodo = db.toDoList;
     }
-
+    searchList = listTodo;
     super.initState();
   }
 
   final _controller = TextEditingController();
+  void search(String value) {
+    String valueSearch = value.toLowerCase().trim();
+    searchList =
+        listTodo.where((element) => element[0].contains(valueSearch)).toList();
+    print('aaa');
+    setState(() {});
+  }
 
   void checkBoxChanged(bool? value, int index) {
     setState(() {
@@ -77,43 +88,74 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          title: const Text('TO DO'),
-          backgroundColor: Colors.blue[300],
-          elevation: 0,
-          centerTitle: true,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ProfilePage()),
-                );
-              },
-              child: Container(
-                height: 40,
-                width: 40,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.asset('assets/images/avatar.jpg'),
-                ),
+        title: const Text('TO DO'),
+        backgroundColor: Colors.blue[300],
+        elevation: 0,
+        centerTitle: true,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
+              );
+            },
+            child: Container(
+              height: 40,
+              width: 40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset('assets/images/avatar.jpg'),
               ),
             ),
-          ]),
+          ),
+        ],
+      ),
       drawer: const MyDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewTask,
         child: const Icon(Icons.add),
       ),
-      body: ListView.builder(
-          itemCount: db.toDoList.length,
-          itemBuilder: (context, index) {
-            return ToDotile(
-              taskName: db.toDoList[index][0],
-              taskCompleted: db.toDoList[index][1],
-              onChanged: (value) => checkBoxChanged(value, index),
-              deleteFunction: (context) => deleteTask(index),
-            );
-          }),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TdSearchBox(
+                controller: searchController,
+                onChanged: search,
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            _divider(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: searchList.length,
+                itemBuilder: (context, index) {
+                  return ToDotile(
+                    taskName: searchList[index][0],
+                    taskCompleted: searchList[index][1],
+                    onChanged: (value) => checkBoxChanged(value, index),
+                    deleteFunction: (context) => deleteTask(index),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _divider() {
+    return const Divider(
+      height: 1.2,
+      thickness: 1.2,
+      indent: 20.0,
+      endIndent: 20.0,
+      color: AppColor.grey,
     );
   }
 }

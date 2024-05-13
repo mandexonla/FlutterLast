@@ -9,7 +9,7 @@ class ToDoDatabase {
     toDoList = [
       ["Buy Foods", true],
       ["Check Emails", false],
-      ["Do Flutter Exercise", true],
+      ["Do Flutter Exercise", false],
       ["Code Flutters", true],
       ["Work on JS", true],
       ["Learning English", false],
