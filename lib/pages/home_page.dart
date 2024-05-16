@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
     String valueSearch = value.toLowerCase().trim();
     searchList =
         listTodo.where((element) => element[0].contains(valueSearch)).toList();
-    print('aaa');
     setState(() {});
   }
 
@@ -86,7 +85,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const Text('TO DO'),
         backgroundColor: Colors.blue[300],
@@ -97,7 +96,7 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ProfilePage()),
+                MaterialPageRoute(builder: (context) => ProfilePage()),
               );
             },
             child: Container(
