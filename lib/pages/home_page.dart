@@ -36,6 +36,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   final _controller = TextEditingController();
+
+  //search box
   void search(String value) {
     String valueSearch = value.toLowerCase().trim();
     searchList =

@@ -25,17 +25,30 @@ class DialogBox extends StatelessWidget {
             controller: controller,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: "them ghi chu moi",
+              hintText: "Add new task",
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               //save button
-              MyButton(text: "Lưu", onPressed: onSaved),
+              MyButton(
+                  text: "Save",
+                  onPressed: () {
+                    if (controller.text.isNotEmpty) {
+                      onSaved();
+                    } else {
+                      // Show an error or handle empty input
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Task cannot be empty'),
+                        ),
+                      );
+                    }
+                  }),
               const SizedBox(width: 8),
               //cancel button
-              MyButton(text: "Huỷ", onPressed: onCancel),
+              MyButton(text: "Cancel", onPressed: onCancel),
             ],
           )
         ]),
