@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+part 'database.g.dart';
 
 class ToDoDatabase {
   List toDoList = [];
@@ -25,4 +27,19 @@ class ToDoDatabase {
   void updateData() {
     _myBox.put("TODOLIST", toDoList);
   }
+}
+
+/// login
+@HiveType(typeId: 1)
+class User {
+  User({
+    required this.username,
+    required this.password,
+  });
+
+  @HiveField(0)
+  final String username;
+
+  @HiveField(1)
+  final String password;
 }

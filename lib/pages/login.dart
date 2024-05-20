@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 import 'package:todoapps/components/app_boder.dart';
 import 'package:todoapps/components/app_button.dart';
 import 'package:todoapps/components/app_color.dart';
 import 'package:todoapps/components/app_textfield.dart';
-import 'package:todoapps/controllers/user.dart';
+import 'package:todoapps/data/database.dart';
 import 'package:todoapps/pages/forgotpassword.dart';
 import 'package:todoapps/pages/home_page.dart';
 import 'package:todoapps/pages/process_page.dart';
@@ -21,14 +22,61 @@ class loginPages extends StatefulWidget {
 class _loginPagesState extends State<loginPages> {
   TextEditingController uesnameController = TextEditingController();
   TextEditingController passwordsController = TextEditingController();
+    // hive login 
+  late Box<User> userBox;
+    @override
+  void initState() {
+    super.initState();
+    _openBox();
+  }
+
+  Future<void> _openBox() async {
+    userBox = await Hive.openBox<User>('userBox');
+  }
+
+  void _login() async {
+    String username = uesnameController.text.trim();
+    String password = passwordsController.text.trim();
+
+    User? user = userBox.get(username);
+
+    if (user != null && user.password == password) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login success')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoadingPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid username or password')),
+      );
+    }
+  }
+
+  void _register() async {
+    String username = uesnameController.text.trim();
+    String password = passwordsController.text.trim();
+
+    if (username.isNotEmpty && password.isNotEmpty) {
+      User user = User(username: username, password: password);
+      await userBox.put(username, user);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Register success')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter both username and password')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.title,
-        ),
+        title: Text(widget.title),
         automaticallyImplyLeading: false,
       ),
       body: Stack(
@@ -48,9 +96,7 @@ class _loginPagesState extends State<loginPages> {
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
@@ -62,16 +108,13 @@ class _loginPagesState extends State<loginPages> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: AppTextField(
                         controller: uesnameController,
-                        prefixicon:
-                            const Icon(Icons.person, color: Colors.grey),
+                        prefixicon: const Icon(Icons.person, color: Colors.grey),
                         hintText: "Enter Username",
                         textInputAction: TextInputAction.next,
                         isPasswords: false,
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
@@ -84,46 +127,16 @@ class _loginPagesState extends State<loginPages> {
                       child: AppTextField(
                         controller: passwordsController,
                         isPasswords: true,
-                        prefixicon:
-                            const Icon(Icons.lock, color: AppColor.grey),
+                        prefixicon: const Icon(Icons.lock, color: AppColor.grey),
                         hintText: "Enter Password",
                         textInputAction: TextInputAction.done,
                       ),
                     ),
-                    const SizedBox(
-                      height: 70,
-                    ),
+                    const SizedBox(height: 70),
                     FractionallySizedBox(
                       widthFactor: 0.4,
                       child: AppTextButton(
-                        onpress: () {
-                          String uesname = uesnameController.text.trim();
-                          String passwords = passwordsController.text;
-                          if (uesname == Authen.username &&
-                              passwords == Authen.password) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'Login success',
-                                ),
-                              ),
-                            );
-                            User.username = uesname;
-                            User.password = passwords;
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoadingPage()));
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'Please enter both username and password',
-                                ),
-                              ),
-                            );
-                          }
-                        },
+                        onpress: _login,
                         text: "Login",
                         textColor: AppColor.white,
                         color: AppColor.blue,
@@ -132,7 +145,6 @@ class _loginPagesState extends State<loginPages> {
                       ),
                     ),
                     const SizedBox(height: 70),
-                    // or continue with
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Row(
@@ -144,8 +156,7 @@ class _loginPagesState extends State<loginPages> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text(
                               'Or continue with',
                               style: TextStyle(color: Colors.grey[700]),
@@ -171,8 +182,7 @@ class _loginPagesState extends State<loginPages> {
                                 MaterialPageRoute(
                                     builder: (context) => const LoadingPage()));
                           },
-                          child: const AppBoder(
-                              imagePath: 'assets/images/apple.png'),
+                          child: const AppBoder(imagePath: 'assets/images/apple.png'),
                         ),
                         const SizedBox(width: 25),
                         InkWell(
@@ -182,8 +192,7 @@ class _loginPagesState extends State<loginPages> {
                                 MaterialPageRoute(
                                     builder: (context) => const LoadingPage()));
                           },
-                          child: const AppBoder(
-                              imagePath: 'assets/images/google.png'),
+                          child: const AppBoder(imagePath: 'assets/images/google.png'),
                         ),
                         const SizedBox(width: 25),
                         InkWell(
@@ -193,8 +202,7 @@ class _loginPagesState extends State<loginPages> {
                                 MaterialPageRoute(
                                     builder: (context) => const LoadingPage()));
                           },
-                          child: const AppBoder(
-                              imagePath: 'assets/images/instagram.jpg'),
+                          child: const AppBoder(imagePath: 'assets/images/instagram.jpg'),
                         ),
                       ],
                     ),
@@ -213,8 +221,7 @@ class _loginPagesState extends State<loginPages> {
                 children: [
                   GestureDetector(
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              const forgotpassword(title: ''))),
+                          builder: (context) => const forgotpassword(title: ''))),
                       child: const Text(
                         'Forgot password ? |',
                       )),
