@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 import 'package:todoapps/components/app_button.dart';
 import 'package:todoapps/components/app_textfield.dart';
-import 'package:todoapps/controllers/user.dart';
+import 'package:todoapps/data/database.dart';
 import 'package:todoapps/pages/login.dart';
 
 class forgotpassword extends StatefulWidget {
@@ -17,6 +18,47 @@ class _forgotpasswordState extends State<forgotpassword> {
   TextEditingController uesnameController = TextEditingController();
   TextEditingController passwordsNewController = TextEditingController();
   TextEditingController passwordsNewConfirmController = TextEditingController();
+
+   late Box<User> userBox;
+
+  @override
+  void initState() {
+    super.initState();
+    _openBox();
+  }
+
+  Future<void> _openBox() async {
+    userBox = await Hive.openBox<User>('userBox');
+  }
+
+  void _resetPassword() async {
+    String username = uesnameController.text.trim();
+    String newPassword = passwordsNewController.text.trim();
+    String confirmPassword = passwordsNewConfirmController.text.trim();
+
+    User? user = userBox.get(username);
+
+    if (user != null) {
+      if (newPassword == confirmPassword) {
+        userBox.put(username, User(username: username, password: newPassword));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Password reset successful')),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const loginPages(title: 'Login')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Passwords do not match')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User not found')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +76,14 @@ class _forgotpasswordState extends State<forgotpassword> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      "Forgot Password ",
+                      "Forgot Password",
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 35,
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
@@ -55,18 +95,15 @@ class _forgotpasswordState extends State<forgotpassword> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: AppTextField(
                         controller: uesnameController,
-                        prefixicon:
-                            const Icon(Icons.accessibility, color: Colors.grey),
+                        prefixicon: const Icon(Icons.accessibility, color: Colors.grey),
                         hintText: "Enter Username",
                         textInputAction: TextInputAction.next,
                         isPasswords: false,
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     const Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         "New Password",
                         style: TextStyle(color: Colors.blue, fontSize: 20),
@@ -77,15 +114,12 @@ class _forgotpasswordState extends State<forgotpassword> {
                       child: AppTextField(
                         controller: passwordsNewController,
                         isPasswords: true,
-                        prefixicon:
-                            const Icon(Icons.ac_unit, color: Colors.grey),
+                        prefixicon: const Icon(Icons.ac_unit, color: Colors.grey),
                         hintText: "Enter new Password",
                         textInputAction: TextInputAction.done,
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
@@ -98,58 +132,16 @@ class _forgotpasswordState extends State<forgotpassword> {
                       child: AppTextField(
                         controller: passwordsNewConfirmController,
                         isPasswords: true,
-                        prefixicon:
-                            const Icon(Icons.ac_unit, color: Colors.grey),
+                        prefixicon: const Icon(Icons.ac_unit, color: Colors.grey),
                         hintText: "Enter Confirm Password",
                         textInputAction: TextInputAction.done,
                       ),
                     ),
-                    const SizedBox(
-                      height: 100,
-                    ),
+                    const SizedBox(height: 100),
                     FractionallySizedBox(
                       widthFactor: 0.4,
                       child: AppTextButton(
-                        onpress: () {
-                          String uesname = uesnameController.text.trim();
-                          if (uesname == User.username) {
-                            if (passwordsNewController.text.trim() ==
-                                passwordsNewConfirmController.text.trim()) {
-                              Authen.password =
-                                  passwordsNewController.text.trim();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Change password success',
-                                  ),
-                                ),
-                              );
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const loginPages(
-                                            title: '',
-                                          )));
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'New password not match confirm password',
-                                  ),
-                                ),
-                              );
-                            }
-                            //Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'Please enter both username',
-                                ),
-                              ),
-                            );
-                          }
-                        },
+                        onpress: _resetPassword,
                         text: "Next",
                         textColor: Colors.white,
                         color: Colors.blue,
