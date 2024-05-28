@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapps/components/app_color.dart';
+import 'package:todoapps/models/user_model.dart';
 import 'package:todoapps/pages/changepassword.dart';
+import 'package:todoapps/services/shared_prefs.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -9,117 +12,134 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String username = '';
-  String name = '';
-  int age = 0;
-  String gender = '';
+  TextEditingController nameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  SharedPrefs prefs = SharedPrefs();
+  UserModel user = UserModel();
+  bool gender = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUser();
+  }
+
+  void _getUser() {
+    prefs.getUser().then((value) {
+      user = value ?? UserModel();
+      nameController.text = user.name ?? '';
+      ageController.text = '${user.age ?? 0}';
+      gender = user.gender ?? false;
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/images/avatar.jpg'),
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Username',
-              ),
-              onChanged: (value) {
-                setState(() {
-                  username = value;
-                });
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Name',
-              ),
-              onChanged: (value) {
-                setState(() {
-                  name = value;
-                });
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Age',
-              ),
-              onChanged: (value) {
-                setState(() {
-                  age = int.parse(value);
-                });
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Gender',
-              ),
-              onChanged: (value) {
-                setState(() {
-                  gender = value;
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Confirmation'),
-                      content: Text('Are you sure you want to save?'),
-                      actions: [
-                        TextButton(
-                          child: const Text(
-                            'Cancel',
-                            style: TextStyle(color: AppColor.red),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Profile'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage('assets/images/avatar.jpg'),
+                ),
+                const SizedBox(height: 50.0),
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 4.0),
+                    hintText: 'Name',
+                    labelText: 'Name',
+                  ),
+                  textInputAction: TextInputAction.next,
+                ),
+                const SizedBox(height: 20.0),
+                TextField(
+                  controller: ageController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 4.0),
+                    hintText: 'Age',
+                    labelText: 'Age',
+                  ),
+                  textInputAction: TextInputAction.done,
+                ),
+                const SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Gender',
+                      style: TextStyle(color: Colors.red, fontSize: 16.0),
+                    ),
+                    GestureDetector(
+                      onTap: () => setState(() => gender = !gender),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8.0, top: 3.2, bottom: 6.0),
+                        child: Icon(
+                          gender
+                              ? Icons.check_box_outlined
+                              : Icons.check_box_outline_blank,
+                          size: 18.0,
+                          color: Colors.red,
                         ),
-                        TextButton(
-                          child: const Text(
-                            'Save',
-                            style: TextStyle(color: AppColor.blue),
-                          ),
-                          onPressed: () {
-                            // Perform save operation here
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 46.0),
+                ElevatedButton(
+                  onPressed: () {
+                    int age = 0;
+                    try {
+                      age = int.parse(ageController.text.trim());
+                    } catch (_) {}
+
+                    final user = UserModel()
+                      ..name = nameController.text.trim()
+                      ..age = age
+                      ..gender = gender;
+
+                    prefs.saveUser(user);
                   },
-                );
-              },
-              child: const Text('Save', style: TextStyle(color: AppColor.blue)),
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(color: AppColor.blue, fontSize: 16.8),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const ChangePassword(title: '')));
+                  },
+                  child: const Text(
+                    'Change Password',
+                    style: TextStyle(color: AppColor.orange),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ChangePassword(
-                            title: '',
-                          )),
-                );
-              },
-              child: const Text('Change Password',
-                  style: TextStyle(color: AppColor.orange)),
-            ),
-          ],
+          ),
         ),
       ),
     );
