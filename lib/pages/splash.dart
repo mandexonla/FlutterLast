@@ -27,22 +27,29 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset(
-            'assets/images/background.png',
-            width: size.width,
-            height: size.height,
-            fit: BoxFit.fill,
-          ),
-          Center(
-            child: Image.asset(
-              'assets/images/logo.png',
-              width: 960.0,
+   return Scaffold(
+      backgroundColor: Color.fromARGB(
+        0,
+        223,
+        223,
+        222,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/images/logo.png",
+              height: 190,
             ),
-          )
-        ],
+            const SizedBox(
+              height: 30,
+            ),
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+            )
+          ],
+        ),
       ),
     );
   }
