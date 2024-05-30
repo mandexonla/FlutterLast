@@ -20,7 +20,7 @@ class _registerState extends State<register> {
   TextEditingController passwordsNewController = TextEditingController();
   TextEditingController passwordsNewConfirmController = TextEditingController();
   late Box<User> userBox;
-   @override
+  @override
   void initState() {
     super.initState();
     _openBox();
@@ -105,7 +105,8 @@ class _registerState extends State<register> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: AppTextField(
                         controller: uesnameController,
-                        prefixicon: const Icon(Icons.accessibility, color: AppColor.grey),
+                        prefixicon: const Icon(Icons.accessibility,
+                            color: AppColor.grey),
                         hintText: "Enter Username",
                         textInputAction: TextInputAction.next,
                         isPasswords: false,
@@ -115,7 +116,7 @@ class _registerState extends State<register> {
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        "New Password",
+                        "Password",
                         style: TextStyle(color: AppColor.blue, fontSize: 20),
                       ),
                     ),
@@ -124,8 +125,9 @@ class _registerState extends State<register> {
                       child: AppTextField(
                         controller: passwordsNewController,
                         isPasswords: true,
-                        prefixicon: const Icon(Icons.ac_unit, color: AppColor.grey),
-                        hintText: "Enter new Password",
+                        prefixicon:
+                            const Icon(Icons.ac_unit, color: AppColor.grey),
+                        hintText: "Enter Password",
                         textInputAction: TextInputAction.done,
                       ),
                     ),
@@ -142,7 +144,8 @@ class _registerState extends State<register> {
                       child: AppTextField(
                         controller: passwordsNewConfirmController,
                         isPasswords: true,
-                        prefixicon: const Icon(Icons.ac_unit, color: AppColor.grey),
+                        prefixicon:
+                            const Icon(Icons.ac_unit, color: AppColor.grey),
                         hintText: "Enter Confirm Password",
                         textInputAction: TextInputAction.done,
                       ),

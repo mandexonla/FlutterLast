@@ -22,9 +22,9 @@ class loginPages extends StatefulWidget {
 class _loginPagesState extends State<loginPages> {
   TextEditingController uesnameController = TextEditingController();
   TextEditingController passwordsController = TextEditingController();
-    // hive login 
+  // hive login
   late Box<User> userBox;
-    @override
+  @override
   void initState() {
     super.initState();
     _openBox();
@@ -67,7 +67,8 @@ class _loginPagesState extends State<loginPages> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter both username and password')),
+        const SnackBar(
+            content: Text('Please enter both username and password')),
       );
     }
   }
@@ -75,10 +76,7 @@ class _loginPagesState extends State<loginPages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        automaticallyImplyLeading: false,
-      ),
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           Positioned.fill(
@@ -88,6 +86,17 @@ class _loginPagesState extends State<loginPages> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const Icon(Icons.lock, size: 100),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'welcome back you\'ve been missed',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 15),
                     const Text(
                       "Login",
                       style: TextStyle(
@@ -108,7 +117,8 @@ class _loginPagesState extends State<loginPages> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: AppTextField(
                         controller: uesnameController,
-                        prefixicon: const Icon(Icons.person, color: Colors.grey),
+                        prefixicon:
+                            const Icon(Icons.person, color: Colors.grey),
                         hintText: "Enter Username",
                         textInputAction: TextInputAction.next,
                         isPasswords: false,
@@ -127,7 +137,8 @@ class _loginPagesState extends State<loginPages> {
                       child: AppTextField(
                         controller: passwordsController,
                         isPasswords: true,
-                        prefixicon: const Icon(Icons.lock, color: AppColor.grey),
+                        prefixicon:
+                            const Icon(Icons.lock, color: AppColor.grey),
                         hintText: "Enter Password",
                         textInputAction: TextInputAction.done,
                       ),
@@ -144,7 +155,7 @@ class _loginPagesState extends State<loginPages> {
                         height: 50,
                       ),
                     ),
-                    const SizedBox(height: 70),
+                    const SizedBox(height: 50),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Row(
@@ -156,7 +167,8 @@ class _loginPagesState extends State<loginPages> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text(
                               'Or continue with',
                               style: TextStyle(color: Colors.grey[700]),
@@ -182,7 +194,8 @@ class _loginPagesState extends State<loginPages> {
                                 MaterialPageRoute(
                                     builder: (context) => const LoadingPage()));
                           },
-                          child: const AppBoder(imagePath: 'assets/images/apple.png'),
+                          child: const AppBoder(
+                              imagePath: 'assets/images/apple.png'),
                         ),
                         const SizedBox(width: 25),
                         InkWell(
@@ -192,7 +205,8 @@ class _loginPagesState extends State<loginPages> {
                                 MaterialPageRoute(
                                     builder: (context) => const LoadingPage()));
                           },
-                          child: const AppBoder(imagePath: 'assets/images/google.png'),
+                          child: const AppBoder(
+                              imagePath: 'assets/images/google.png'),
                         ),
                         const SizedBox(width: 25),
                         InkWell(
@@ -202,7 +216,8 @@ class _loginPagesState extends State<loginPages> {
                                 MaterialPageRoute(
                                     builder: (context) => const LoadingPage()));
                           },
-                          child: const AppBoder(imagePath: 'assets/images/instagram.jpg'),
+                          child: const AppBoder(
+                              imagePath: 'assets/images/instagram.jpg'),
                         ),
                       ],
                     ),
@@ -212,29 +227,28 @@ class _loginPagesState extends State<loginPages> {
               ),
             ),
           ),
-          Positioned(
-              bottom: 10,
-              right: 20,
-              left: 20,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const forgotpassword(title: ''))),
-                      child: const Text(
-                        'Forgot password ? |',
-                      )),
-                  GestureDetector(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const register(title: ''))),
-                      child: const Text(
-                        ' register',
-                        style: TextStyle(color: AppColor.red),
-                      )),
-                ],
-              ))
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const forgotpassword(title: ''))),
+                child: const Text(
+                  'Forgot password ? |',
+                )),
+            GestureDetector(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const register(title: ''))),
+                child: const Text(
+                  ' register',
+                  style: TextStyle(color: AppColor.red),
+                )),
+          ],
+        ),
       ),
     );
   }
