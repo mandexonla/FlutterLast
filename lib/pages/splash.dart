@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:todoapps/pages/login.dart';
+import 'package:todoapps/pages/onbording.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key, required String title});
@@ -15,12 +16,12 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     // TODO: implement initState
     Timer(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => const loginPages(
-                      title: '',
+                builder: (context) => const OnBording(
+                   
                     ))));
   }
 
@@ -34,14 +35,14 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "assets/images/logo.png",
-              height: 190,
+              "assets/images/logoo.png",
+              height: 100,
             ),
             const SizedBox(
-              height: 30,
+              height: 70,
             ),
             CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+              valueColor: AlwaysStoppedAnimation<Color>(const Color.fromARGB(255, 119, 172, 215)),
             )
           ],
         ),
