@@ -15,7 +15,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     // TODO: implement initState
     Timer(
-        Duration(milliseconds: 3000),
+        Duration(seconds: 3),
         () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -27,13 +27,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-   return Scaffold(
-      backgroundColor: Color.fromARGB(
-        0,
-        223,
-        223,
-        222,
-      ),
+    return Scaffold(
+      backgroundColor: Color.fromARGB(0, 161, 168, 188),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
