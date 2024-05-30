@@ -5,7 +5,6 @@ import 'package:todoapps/data/database.dart';
 import 'package:todoapps/pages/splash.dart';
 import 'package:todoapps/themes/theme_provider.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // init th hive

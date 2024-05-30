@@ -11,7 +11,7 @@ class AboutPages extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.blue[100],
       ),
-      body: const Center(
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
@@ -20,12 +20,18 @@ class AboutPages extends StatelessWidget {
               Text(
                 'This is a to-do app that helps you manage your tasks and stay organized.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18.0),
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Text(
                 'Developed by [NG Mars]',
-                style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
             ],
           ),

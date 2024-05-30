@@ -44,9 +44,12 @@ class _LoadingPageState extends State<LoadingPage> {
                 progressColor: Colors.deepPurple,
                 backgroundColor: Colors.deepPurple.shade100,
                 circularStrokeCap: CircularStrokeCap.round,
-                center: const Text(
+                center: Text(
                   'Loading',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
               ),
               LinearPercentIndicator(

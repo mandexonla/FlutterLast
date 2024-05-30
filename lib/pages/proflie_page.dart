@@ -40,7 +40,13 @@ class _ProfilePageState extends State<ProfilePage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Profile'),
+          title: Text(
+            'Profile',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -48,96 +54,104 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage('assets/images/avatar.jpg'),
-                ),
-                const SizedBox(height: 50.0),
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 4.0),
-                    hintText: 'Name',
-                    labelText: 'Name',
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage('assets/images/avatar.jpg'),
                   ),
-                  textInputAction: TextInputAction.next,
-                ),
-                const SizedBox(height: 20.0),
-                TextField(
-                  controller: ageController,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 4.0),
-                    hintText: 'Age',
-                    labelText: 'Age',
-                  ),
-                  textInputAction: TextInputAction.done,
-                ),
-                const SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Gender',
-                      style: TextStyle(color: Colors.red, fontSize: 16.0),
-                    ),
-                    GestureDetector(
-                      onTap: () => setState(() => gender = !gender),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 8.0, top: 3.2, bottom: 6.0),
-                        child: Icon(
-                          gender
-                              ? Icons.check_box_outlined
-                              : Icons.check_box_outline_blank,
-                          size: 18.0,
-                          color: Colors.red,
-                        ),
+                  const SizedBox(height: 50.0),
+                  TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 4.0),
+                      hintText: 'Name',
+                      labelText: 'Name',
+                      labelStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 46.0),
-                ElevatedButton(
-                  onPressed: () {
-                    int age = 0;
-                    try {
-                      age = int.parse(ageController.text.trim());
-                    } catch (_) {}
-
-                    final user = UserModel()
-                      ..name = nameController.text.trim()
-                      ..age = age
-                      ..gender = gender;
-
-                    prefs.saveUser(user);
-                  },
-                  child: const Text(
-                    'Save',
-                    style: TextStyle(color: AppColor.blue, fontSize: 16.8),
+                    textInputAction: TextInputAction.next,
                   ),
-                ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const ChangePassword(title: '')));
-                  },
-                  child: const Text(
-                    'Change Password',
-                    style: TextStyle(color: AppColor.orange),
+                  const SizedBox(height: 20.0),
+                  TextField(
+                    controller: ageController,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 4.0),
+                      hintText: 'Age',
+                      labelText: 'Age',
+                      labelStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
+                    textInputAction: TextInputAction.done,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 16.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Gender',
+                        style: TextStyle(color: Colors.red, fontSize: 16.0),
+                      ),
+                      GestureDetector(
+                        onTap: () => setState(() => gender = !gender),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 8.0, top: 3.2, bottom: 6.0),
+                          child: Icon(
+                            gender
+                                ? Icons.check_box_outlined
+                                : Icons.check_box_outline_blank,
+                            size: 18.0,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 46.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      int age = 0;
+                      try {
+                        age = int.parse(ageController.text.trim());
+                      } catch (_) {}
+
+                      final user = UserModel()
+                        ..name = nameController.text.trim()
+                        ..age = age
+                        ..gender = gender;
+
+                      prefs.saveUser(user);
+                    },
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(color: AppColor.blue, fontSize: 16.8),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ChangePassword(title: '')));
+                    },
+                    child: const Text(
+                      'Change Password',
+                      style: TextStyle(color: AppColor.orange),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -4,17 +4,20 @@ import 'package:provider/provider.dart';
 import 'package:todoapps/components/app_color.dart';
 import 'package:todoapps/themes/theme_provider.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class ThemePage extends StatelessWidget {
+  const ThemePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const Text('S E T T I N G S'),
+        title: Text(
+          'D A R K M O D E',
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+        ),
         centerTitle: true,
-        backgroundColor: AppColor.blue,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -27,9 +30,14 @@ class SettingsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // dark mode
-            const Text(
+            Text(
               'Dark Mode',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context)
+                    .colorScheme
+                    .onPrimary, // Sử dụng onPrimary
+              ),
             ),
 
             // switch
