@@ -15,7 +15,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     // TODO: implement initState
     Timer(
-        Duration(milliseconds: 3000),
+        Duration(seconds: 3),
         () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -28,21 +28,23 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset(
-            'assets/images/background.png',
-            width: size.width,
-            height: size.height,
-            fit: BoxFit.fill,
-          ),
-          Center(
-            child: Image.asset(
-              'assets/images/logo.png',
-              width: 960.0,
+      backgroundColor: Color.fromARGB(0, 161, 168, 188),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/images/logo.png",
+              height: 190,
             ),
-          )
-        ],
+            const SizedBox(
+              height: 30,
+            ),
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+            )
+          ],
+        ),
       ),
     );
   }
